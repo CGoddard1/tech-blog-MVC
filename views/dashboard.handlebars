@@ -1,0 +1,152 @@
+<!-- Modal to handle blogpost updates -->
+<div class="modal fade" id="updatePost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update/Edit Blogpost</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        {{!-- populate the modal with the id, title, and description from the button click --}}
+        <form class="form update-blog-form">
+          <div class="form-group">
+            <h6><label for="blog-title-update">New Title:</label></h6>
+            <input class="form-input update-title" type="text" id="blog-title-update" />
+          </div>
+
+          <div class="form-group">
+            <h6><label for="blog-desc-update">New Description:</label></h6>
+            <textarea class="form-input update-desc" id="blog-desc-update"></textarea>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary updateBlogButton">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Modal to update comments --}}
+<div class="modal fade" id="updateComment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update/Edit Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        {{!-- populate the modal with the id, title, and description from the button click --}}
+        <form class="form update-blog-form">
+
+          <div class="form-group">
+            <h6><label for="blog-comment-update">Comment:</label></h6>
+            <textarea class="form-input update-comment" id="blog-desc-comment"></textarea>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary updateCommentButton">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{!-- Section to show the user their posts --}}
+<div class="row dashboard-container">
+  <h1>Hello, {{session.name}}!</h1>
+  <hr>
+
+  {{!-- User blog section --}}
+  <div class="col col-lg-8 left-col">
+    {{!-- Showing the user each of their blogposts after they are logged in --}}
+    <h3 class="column-title">Your Blogposts:</h3>
+    <div class="all-blogs-container">
+
+      {{#each userArray}}
+
+      <div class="blog-entry dash-blogpost">
+        <div class="getthis">
+          <h1 class="blog-header"> {{title}} </h1>
+          <p class="blogDescription descText"> {{description}} </p>
+        </div>
+        <div class="editButtons">
+
+          {{!-- edit button for id --}}
+          <i id="{{id}}" type="button" class='fa-solid fa-pen-to-square edit-button' data-bs-toggle="modal"
+            data-bs-target="#updatePost" style='font-size:24px'></i>
+
+          {{!-- delete button for id --}}
+          <i id="{{id}}" type="button" class="fa-solid fa-trash delete-button" style='font-size:24px'></i>
+
+        </div>
+      </div>
+      {{/each}}
+
+    </div>
+  </div>
+
+  {{!-- User Comments Section --}}
+  <div class="col col-lg-4">
+    <h3 class="column-title">Your Comments:</h3>
+    {{#each commentArray}}
+    <div class="commentsWrapperDash">
+      <div class="commentHeader">
+        <p class="commentTitle commentData"> <em>Blog Title:</em>  {{blogpost.title}}</p>
+        <p class="commentDate commentData"> <em>Date Commented:</em>  {{format_date date_created}}</p>
+      </div>
+      <p class="commentText commentData">{{description}}</p>
+
+      {{!-- Action buttons --}}
+      <div class="commentFooter">
+        <i id="{{id}}" type="button" class='fa-solid fa-pen-to-square comment-edit-button' data-bs-toggle="modal"
+          data-bs-target="#updateComment" style='font-size:24px'></i>
+
+        <i id="{{id}}" class='fa-solid fa-trash comment-delete-button' style='font-size:24px'></i>
+
+        <i id="{{blogpost_id}}" class='fa-solid fa-arrow-up-right-from-square link-button' style='font-size:24px'></i>
+
+      </div>
+    </div>
+
+    {{else}}
+    <p>No comments yet!</p>
+    {{/each}}
+  </div>
+</div>
+
+<hr>
+
+{{!-- Section for the user to add a new blogpost --}}
+<h5>Add a new post below:</h5>
+<div class="newPost">
+
+  <form class="form new-blog-form">
+    <div class="form-group">
+      <label for="blog-title">Blog Title:</label>
+      <input class="form-input" type="text" id="blog-title" />
+    </div>
+
+    <div class="form-group">
+      <label for="blog-desc">Description:</label>
+      <textarea class="form-input" id="blog-desc"></textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary newBlogButton">Create</button>
+    </div>
+  </form>
+</div>
+
+<script type="text/javascript" src="/js/userDashboard.js"></script>
